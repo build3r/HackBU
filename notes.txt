@@ -8,3 +8,4 @@ hackbu-2017s.devpost.com
 
 
 # Code info
+Alexa vs Android App (or, use both?)
