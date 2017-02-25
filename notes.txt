@@ -1,0 +1,10 @@
+# Partial list of categories
+from scratch
+funniest
+best business opportunity
+
+# Devpost
+hackbu-2017s.devpost.com
+
+
+# Code info
