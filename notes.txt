@@ -53,3 +53,9 @@ FLOW
 - Return parser(top 3 {item name: price} )
   - returns final string value of nicely phrased suggestions
 - Send string to Alexa
+
+FUTURE IMPROVEMENT:
+- Given a user question about the time of someone's bday, respond with a certain number of days till then
+- Filter items based on proximity
+- More filtering parameters available with the findItemsByKeywords function
+- Sort by seller reviews
