@@ -38,7 +38,7 @@ def get_college_info(person):
         for school in edu:
             if school['type'] == 'College':
                 school_name = school['school']['name']
-                print(school_name)
+                print("SCHOOL NAME: " + str(school_name))
                 return ['college', str(school_name)]
     except KeyError:
         pass
@@ -57,6 +57,7 @@ def get_facebook_info(friend_name):
             top_3_likes = parse_likes(likes_list)#.append(get_college_info(person))
             if not top_3_likes:
                 top_3_likes = get_college_info(person)
+                print("Empty, so college: " + str(top_3_likes))
             else:
                 top_3_likes = top_3_likes.append(get_college_info(person))
             return top_3_likes
@@ -85,7 +86,7 @@ def parse_likes(likes_list):
             clothing.append(['clothing', like['name']])
 
     likes = sports_team + book + musician + clothing + computers
-    print(likes)
+    print("Likes list: " + str(likes))
 
     i = 0
     retVal = []
@@ -104,16 +105,28 @@ def get_ebay_info(items_list):
         return None
     else:
         gifts_list = []
-        for item in items_list:
-            print("ITEM: " + str(item))
-            if item[0] != 'college':
-                ebay_string = ebay_url.format(get_ebay_string(item))
+        if (type(items_list[0]) is not list):
+            print("SINGLE ITEM: " + str(items_list))
+            if items_list[0] != 'college':
+                ebay_string = ebay_url.format(get_ebay_string(items_list))
                 ebay_info = requests.get(ebay_string).json()
                 try:
                     item_price = ebay_info['findItemsByKeywordsResponse'][0]['searchResult'][0]['item'][0]['sellingStatus'][0]['convertedCurrentPrice'][0]['__value__']
-                    gifts_list.append([item, str(item_price)])
+                    gifts_list.append([items_list, str(item_price)])
                 except KeyError:
-                    print("Couldn't find an item matching {0} {1}".format(item[0], item[1]))
+                    print("Couldn't find an item matching {0} {1}".format(items_list[0], items_list[1]))
+            gifts_list.append(items_list)
+        else:
+            for item in items_list:
+                print("ITEM: " + str(item))
+                if item[0] != 'college':
+                    ebay_string = ebay_url.format(get_ebay_string(item))
+                    ebay_info = requests.get(ebay_string).json()
+                    try:
+                        item_price = ebay_info['findItemsByKeywordsResponse'][0]['searchResult'][0]['item'][0]['sellingStatus'][0]['convertedCurrentPrice'][0]['__value__']
+                        gifts_list.append([item, str(item_price)])
+                    except KeyError:
+                        print("Couldn't find an item matching {0} {1}".format(item[0], item[1]))
     print(gifts_list)
     return gifts_list
 
