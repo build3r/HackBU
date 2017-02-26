@@ -21,9 +21,9 @@ def get_gifts(friend_name):
     items_list = get_facebook_info(friend_name)
 
     # use facebook info to find ebay listings
-    gifts_dict = get_ebay_info(items_list)
+    gifts_list = get_ebay_info(items_list)
 
-    ret_string = get_nice_message(gifts_dict).format(friend_name)
+    ret_string = get_nice_message(gifts_list).format(friend_name)
     return statement(ret_string).simple_card('Gift Suggestion', ret_string)
 
 
@@ -63,20 +63,31 @@ def parse_likes(likes_list):
             clothing.append({'clothing': like['name']})
 
     print(sports_team + book + musician + clothing + computers)
+    likes = sports_team + book + musician + clothing + computers
+    i = 0
+    retVal = []
+    for element in likes:
+        if i < 3:
+            retVal.append(element)
+        else:
+            break
+        i += 1
+    print('retVal: ' + str(retVal))
+    return retVal
 
 
 def get_ebay_info(items_list):
     if not items_list:
         return None
     else:
-        return None  # [{1: 10}, {2: 20}, {3: 30}]
+        return None
 
 
-def get_nice_message(gifts_dict):
-    if not gifts_dict:
+def get_nice_message(gifts_list):
+    if not gifts_list:
         return not_enough_info_string
     else:
-        return None
+        return not_enough_info_string
 
 
 if __name__ == '__main__':
