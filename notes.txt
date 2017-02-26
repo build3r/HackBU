@@ -14,7 +14,6 @@ TODO
 ----
 - Finish rules for parsing facebook
 - Setup alexa utterances
-- Test google shopping api
 - Test facebook API
 - code the damn thing
 
@@ -22,4 +21,13 @@ RULES
 -----
 Category: "Sports Team"
    - search for "name"
-
+Category: "Book"
+   - search for "name"
+Category: "Musician/Band"
+   - search for "name"
+   - maybe parse for "The official page of {}"
+Category: "Clothing (Brand,...)"
+   - search for "name"
+   - maybe parse for "The official page of {}"
+education: "name"
+   - If type == College, then maybe "You should get {friend name} some {college name} swag"
