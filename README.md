@@ -1,4 +1,4 @@
-# HackBU #
+# Gift Suggester #
 Code for HackBU 2017
 
 # The Problem #
