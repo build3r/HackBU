@@ -6,10 +6,6 @@ best business opportunity
 # Devpost
 hackbu-2017s.devpost.com
 
-
-# Code info
-Alexa vs Android App (or, use both?)
-
 TODO
 ----
 - Finish rules for parsing facebook
@@ -21,6 +17,7 @@ RULES
 -----
 Category: "Sports Team"
    - search for "name"
+   Response:
 Category: "Book"
    - search for "name"
 Category: "Musician/Band"
@@ -29,5 +26,27 @@ Category: "Musician/Band"
 Category: "Clothing (Brand,...)"
    - search for "name"
    - maybe parse for "The official page of {}"
+Category: "Computers (Brand,...)"
+   - use name
+
 education: "name"
    - If type == College, then maybe "You should get {friend name} some {college name} swag"
+
+
+
+FLOW
+----
+- User asks alexa: "Alexa, ask Gift Suggester, what gift should I get for <NAME>?"
+- Alexa -> get_gifts(NAME)
+- get_gifts(NAME)
+  - facebook api, parse for info on NAME
+    - pattern matching for specific likes
+      - use "like hierarchy" to sort first
+    - return top 3 candidates
+  - ebay api(top 3 candidates)
+    - get "items" relating to keywords from facebook api
+    - return (item name: price)
+  - Return (item name: price)
+- Return parser(top 3 {item name: price} )
+  - returns final string value of nicely phrased suggestions
+- Send string to Alexa
