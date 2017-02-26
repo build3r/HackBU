@@ -9,3 +9,17 @@ hackbu-2017s.devpost.com
 
 # Code info
 Alexa vs Android App (or, use both?)
+
+TODO
+----
+- Finish rules for parsing facebook
+- Setup alexa utterances
+- Test google shopping api
+- Test facebook API
+- code the damn thing
+
+RULES
+-----
+Category: "Sports Team"
+   - search for "name"
+
