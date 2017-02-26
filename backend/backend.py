@@ -9,7 +9,8 @@ app = Flask(__name__)
 ask = Ask(app, '/')
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
-facebook_url = 'https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cfriends%7Bname%2Ceducation%2Clikes%7Babout%2Ccategory%2Cname%2Cdisplay_subtext%2Cgeneral_info%2Cgenre%2Ccompany_overview%7D%2Cbirthday%7D&access_token=EAACEdEose0cBAFwfDpZAlNNmaZBv1v40EV8ZBbGhvKQEFzbZCIfZCqMz0E0MY3OYNdkV7iBZBNDTwABZAFdxVB4f77DvdbSOxZBLMvxaN9CYThrEpXQwJQf3YwRY54egDDclgRp7ZBaLtrIZAzqkwSZALYWaSZAd4OanliwuHIMsRZCZBTiDzbXjgmy7i6lsuzW89u2wcZD'
+facebook_url = 'https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cfriends%7Bname%2Ceducation%2Clikes%7Bcategory%2Cname%7D%2Cbirthday%7D&access_token=EAACEdEose0cBAFwfDpZAlNNmaZBv1v40EV8ZBbGhvKQEFzbZCIfZCqMz0E0MY3OYNdkV7iBZBNDTwABZAFdxVB4f77DvdbSOxZBLMvxaN9CYThrEpXQwJQf3YwRY54egDDclgRp7ZBaLtrIZAzqkwSZALYWaSZAd4OanliwuHIMsRZCZBTiDzbXjgmy7i6lsuzW89u2wcZD'
+ebay_url = 'http://svcs.sandbox.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=RobinLi-HackBU-SBX-16c385072-25a053d6&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&callback=_cb_findItemsByKeywords&REST-PAYLOAD&keywords={0}&itemFilter.paramName=Currency&itemFilter.paramValue=USD&itemFilter.value=true&paginationInput.entriesPerPage=1'
 
 not_enough_info_string = "I don't have enough info to suggest anything for {0}. Perhaps you should ask {0} yourself."
 
@@ -52,15 +53,15 @@ def parse_likes(likes_list):
     for like in likes_list:
         category = like['category'].lower()
         if category == 'sports team':
-            sports_team.append({'sports_team': like['name']})
+            sports_team.append(['sports team', like['name']])
         elif category == 'book':
-            book.append({'book': like['name']})
+            book.append(['book', like['name']])
         elif category.find('musician') != -1:
-            musician.append({'musician': like['name']})
+            musician.append(['musician', like['name']])
         elif category.find('computers') != -1:
-            computers.append({'computers': like['name']})
+            computers.append(['computers', like['name']])
         elif category.find('clothing') != -1:
-            clothing.append({'clothing': like['name']})
+            clothing.append(['clothing', like['name']])
 
     print(sports_team + book + musician + clothing + computers)
     likes = sports_team + book + musician + clothing + computers
@@ -80,7 +81,18 @@ def get_ebay_info(items_list):
     if not items_list:
         return None
     else:
-        return None
+        for item in items_list:
+            ebay_string = ebay_url.format(get_ebay_string(item))
+    return None
+
+def get_ebay_string(item):
+    category = item[0]
+    name = item[1]
+    retval = category + ' ' + name
+    retval = retval.replace(' ', '%20')
+    print(retval)
+    return retval
+
 
 
 def get_nice_message(gifts_list):
