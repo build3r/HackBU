@@ -40,6 +40,6 @@ if __name__ == '__main__':
     # ebay
     # url = 'http://svcs.sandbox.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=RobinLi-HackBU-SBX-16c385072-25a053d6&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&callback=_cb_findItemsByKeywords&REST-PAYLOAD&keywords=sports%20team%20Cleveland%20Cavaliers&itemFilter.paramName=Currency&itemFilter.paramValue=USD&itemFilter.value=true&paginationInput.entriesPerPage=1'
     # facebook
-    url = 'https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cfriends%7Bname%2Ceducation%2Clikes%7Bcategory%2Cname%7D%2Cbirthday%7D&access_token=EAACEdEose0cBAAZAlCuCcgKxIovBglwcZCB2VCJkB10mMAaHXTraOeE4Y2NQFIEDnmKAmEEF3TfzijZB1zVZCFvypmwd7gk1JZCpsi9OguZB8gBZAPTICVSBwGb4vmFEN74yr7pfpG9HhNlGZBodkS2Va7bZAffp4hzYJfDALv8K2bqGt5OH8KZA7HjiN3Q0oG1R8ZD'
+    url = 'https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cfriends%7Bname%2Ceducation%2Clikes%7Bcategory%2Cname%7D%2Cbirthday%7D&access_token=EAACEdEose0cBAH6zIBO8BAawc8j2r9y2eHymWnaH0g5mFq9etc1vmUQzRyDioW2CiInBXNxjUNRaVQKIrqWNHTb8ySABpg5PoZCfm8qRIfVorQPDftFXjmCN7HTkXygeJZB4aKPjocX462qSNH7OtM8U3G8mWcPFcZC9YA203cCQIBPq41s5BwhT98sTskZD'
     t = Api(url)
     t.get_response()

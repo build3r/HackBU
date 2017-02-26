@@ -9,7 +9,7 @@ app = Flask(__name__)
 ask = Ask(app, '/')
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
-facebook_url = 'https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cfriends%7Bname%2Ceducation%2Clikes%7Bcategory%2Cname%7D%2Cbirthday%7D&access_token=EAACEdEose0cBAAZAlCuCcgKxIovBglwcZCB2VCJkB10mMAaHXTraOeE4Y2NQFIEDnmKAmEEF3TfzijZB1zVZCFvypmwd7gk1JZCpsi9OguZB8gBZAPTICVSBwGb4vmFEN74yr7pfpG9HhNlGZBodkS2Va7bZAffp4hzYJfDALv8K2bqGt5OH8KZA7HjiN3Q0oG1R8ZD'
+facebook_url = 'https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cfriends%7Bname%2Ceducation%2Clikes%7Bcategory%2Cname%7D%2Cbirthday%7D&access_token=EAACEdEose0cBAH6zIBO8BAawc8j2r9y2eHymWnaH0g5mFq9etc1vmUQzRyDioW2CiInBXNxjUNRaVQKIrqWNHTb8ySABpg5PoZCfm8qRIfVorQPDftFXjmCN7HTkXygeJZB4aKPjocX462qSNH7OtM8U3G8mWcPFcZC9YA203cCQIBPq41s5BwhT98sTskZD'
 ebay_url = 'http://svcs.sandbox.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=RobinLi-HackBU-SBX-16c385072-25a053d6&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&callback=_cb_findItemsByKeywords&REST-PAYLOAD&keywords={0}&itemFilter.paramName=Currency&itemFilter.paramValue=USD&itemFilter.value=true&paginationInput.entriesPerPage=1'
 
 not_enough_info_string = "I don't have enough info to suggest anything for {0}. Perhaps you should ask {0} yourself."
@@ -53,13 +53,19 @@ def get_facebook_info(friend_name):
     for person in people:
         if (person['name'])[:person['name'].find(' ')].lower() == friend_name.lower():
             print('Found {0}'.format(friend_name))
-            likes_list = person['likes']['data']
-            top_3_likes = parse_likes(likes_list)#.append(get_college_info(person))
+            try:
+                likes_list = person['likes']['data']
+                top_3_likes = parse_likes(likes_list)
+                print("top 3 likes: " + str(top_3_likes))
+            except KeyError:
+                print("No likes for {0}".format(friend_name))
+                top_3_likes = []
             if not top_3_likes:
                 top_3_likes = get_college_info(person)
                 print("Empty, so college: " + str(top_3_likes))
             else:
-                top_3_likes = top_3_likes.append(get_college_info(person))
+                top_3_likes += get_college_info(person)
+            print("Top 3 likes: " + str(top_3_likes))
             return top_3_likes
     return None
 
@@ -135,7 +141,7 @@ def get_ebay_string(item):
     category = item[0]
     name = item[1]
     retval = ''
-    if category == 'sports team':
+    if category == 'sports team' or category == 'musician':
         retval = name
     else:
         retval = category + ' ' + name
