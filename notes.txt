@@ -15,6 +15,14 @@ TODO
 BEFORE 1PM:
 - COMPLETE DEVPOST INFO SUBMISSION
 - Make sure alexa works with wifi after unplugging 
+- 5 TEST CASES
+
+TEST CASES
+----
+1) Ask for Robin
+2) Ask for Arun Philip
+3) Daniel Sinclair
+4) Samuel Echefu
 
 RULES
 -----
