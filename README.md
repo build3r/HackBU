@@ -12,22 +12,20 @@ Provides you with a birthday gift suggestion for your friend!
 2. Utilize the Facebook Graph API to retrieve interests and likes associated with that person's online presence.
 3. Parse the info from Facebook to provide viable data that can then be used to construct keyword phrases.
 4. Call the eBay Finding API with our generated phrases in a manner designed to retrieve the most relevant results.
-5a. Parse the returned item and price info into a more conversational form, which Alexa then articulates to you.
-5b. The item info and price is also sent to the Alexa companion app on your smartphone.
+5. Parse the returned item and price info into a more conversational form, which Alexa then articulates to you.
+6. The item info and price is also sent to the Alexa companion app on your smartphone.
 
 # Technologies/APIs used
-Amazon Alexa: user interface (voice and/or app)
-Facebook Graph API: used for retrieving your friends' relevant information
-eBay Finding API: used for querying the market price and specific sale listings for the item in question
-Python + Flask: Used for handling back-end logic/parsing and facilitates data-flow between the APIs used for this Alexa skill.
-ngrok: Provides seamless local hosting of our webserver and allows it to interface with Amazon Alexa
+- Amazon Alexa: user interface (voice and/or app)
+- Facebook Graph API: used for retrieving your friends' relevant information
+- eBay Finding API: used for querying the market price and specific sale listings for the item in question
+- Python + Flask: Used for handling back-end logic/parsing and facilitates data-flow between the APIs used for this Alexa skill.
+- ngrok: Provides seamless local hosting of our webserver and allows it to interface with Amazon Alexa
 
 # Future
-Functionalities:
 - Apply a more intelligent approach to parsing through the retrieved information from facebook, and provide even more relevant results for the friend in question.
 - Add knowledge of a friend's birthday, ideally so the user could ask something like, "What friends have birthdays next week, and what should I get them?"
   - This was a stretch goal for us, and due to time constraints, we were unable to accomplish this during HackBU.
-Filtering improvements:
 - Filter items based on proximity, sort by seller reviews, look up which items have free and fast shipping
 - More filtering parameters available with the findItemsByKeywords function provided by eBay's Finding API
 - Implement searching by category in addition to using keywords
