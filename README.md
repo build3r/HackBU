@@ -21,4 +21,5 @@ Improve the accuracy search query by filtering on non relevant items
 Find an alternative e-commerce website to search for items such as Amazon
 
 # Issues faced
-Google Shopping API has been deprecated since 2013 and is no longer public
+We found out Google Shopping API has been deprecated since 2013 and is no longer public.
+Ebay API documentation needs more sample code or examples of the use of their product search API
