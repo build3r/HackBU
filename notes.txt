@@ -12,6 +12,9 @@ TODO
 - Setup alexa utterances
 - Test facebook API
 - code the damn thing
+BEFORE 1PM:
+- COMPLETE DEVPOST INFO SUBMISSION
+- Make sure alexa works with wifi after unplugging 
 
 RULES
 -----
