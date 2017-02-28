@@ -9,7 +9,7 @@ app = Flask(__name__)
 ask = Ask(app, '/')
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
-facebook_url = 'https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cfriends%7Bname%2Ceducation%2Clikes%7Bcategory%2Cname%7D%2Cbirthday%7D&access_token=EAACEdEose0cBAH6zIBO8BAawc8j2r9y2eHymWnaH0g5mFq9etc1vmUQzRyDioW2CiInBXNxjUNRaVQKIrqWNHTb8ySABpg5PoZCfm8qRIfVorQPDftFXjmCN7HTkXygeJZB4aKPjocX462qSNH7OtM8U3G8mWcPFcZC9YA203cCQIBPq41s5BwhT98sTskZD'
+facebook_url = 'https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cfriends%7Bname%2Ceducation%2Cbirthday%2Clikes%7Bcategory%2Cname%7D%7D&access_token=EAACEdEose0cBAFo6LQmEcYE9O8aL5l2THSgT0hIyj8NCBwIKYCoIemrSt5G2WtBG0joIv0df5bAjHZBoBtDXr8wZAPEUy9uT7dn5zq9MruW24R2K8gY1UuuBpVylu7CSXCRw6WGkL47vqWBhEWOWfNpGFomWkwV1xeRAKnua1vrUa4Cr7ZCFYsEeOnSFa8ZD'
 ebay_url = 'http://svcs.sandbox.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=RobinLi-HackBU-SBX-16c385072-25a053d6&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&callback=_cb_findItemsByKeywords&REST-PAYLOAD&keywords={0}&itemFilter.paramName=Currency&itemFilter.paramValue=USD&itemFilter.value=true&paginationInput.entriesPerPage=1'
 
 not_enough_info_string = "I don't have enough info to suggest anything for {0}. Perhaps you should ask {0} yourself."
@@ -53,8 +53,17 @@ def get_facebook_info(friend_name):
     for person in people:
         if (person['name'])[:person['name'].find(' ')].lower() == friend_name.lower():
             print('Found {0}'.format(friend_name))
+            # get all likes
             try:
                 likes_list = person['likes']['data']
+                print("Initial likes list: " + str(likes_list))
+                try:
+                    more_likes = requests.get(person['likes']['paging']['next']).json()['data']
+                    likes_list = likes_list + more_likes
+                    print('appending likes')
+                except KeyError:
+                    print("KeyError. Likes = " + str(likes_list))
+
                 top_3_likes = parse_likes(likes_list)
                 print("top 3 likes: " + str(top_3_likes))
             except KeyError:
@@ -94,16 +103,17 @@ def parse_likes(likes_list):
     likes = sports_team + book + musician + clothing + computers
     print("Likes list: " + str(likes))
 
-    i = 0
-    retVal = []
-    for element in likes:
-        if i < 3:
-            retVal.append(element)
-        else:
-            break
-        i += 1
-    print('retVal: ' + str(retVal))
-    return retVal
+    # i = 0
+    # retVal = []
+    # for element in likes:
+    #     if i < 3:
+    #         retVal.append(element)
+    #     else:
+    #         break
+    #     i += 1
+    # print('retVal: ' + str(retVal))
+    # return retVal
+    return likes
 
 
 def get_ebay_info(items_list):
@@ -150,14 +160,13 @@ def get_ebay_string(item):
     return retval
 
 
-
 def get_nice_message(gifts_list):
     if not gifts_list:
         return not_enough_info_string
     else:
         final_message = ''
         curr_spot = 0
-        for gift in gifts_list:
+        for gift in gifts_list[0:3]:
             if gift[0][0] == 'sports team':
                 if curr_spot == 0:
                     final_message += '{0} might like an item from the ' + gift[0][1] + '. I found one for ' + gift[1] + ' dollars on ebay.'
