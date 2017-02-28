@@ -9,8 +9,12 @@ app = Flask(__name__)
 ask = Ask(app, '/')
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
+# using the facebook graph api v2.8 explorer, get the token for: me?fields=id,name,friends{name,education,birthday,likes{category,name}}
 facebook_url = 'https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cfriends%7Bname%2Ceducation%2Cbirthday%2Clikes%7Bcategory%2Cname%7D%7D&access_token=EAACEdEose0cBAFo6LQmEcYE9O8aL5l2THSgT0hIyj8NCBwIKYCoIemrSt5G2WtBG0joIv0df5bAjHZBoBtDXr8wZAPEUy9uT7dn5zq9MruW24R2K8gY1UuuBpVylu7CSXCRw6WGkL47vqWBhEWOWfNpGFomWkwV1xeRAKnua1vrUa4Cr7ZCFYsEeOnSFa8ZD'
 ebay_url = 'http://svcs.sandbox.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=RobinLi-HackBU-SBX-16c385072-25a053d6&GLOBAL-ID=EBAY-US&RESPONSE-DATA-FORMAT=JSON&callback=_cb_findItemsByKeywords&REST-PAYLOAD&keywords={0}&itemFilter.paramName=Currency&itemFilter.paramValue=USD&itemFilter.value=true&paginationInput.entriesPerPage=1'
+
+# maximum number of gift suggestions to return
+MAX_GIFTS = 3
 
 not_enough_info_string = "I don't have enough info to suggest anything for {0}. Perhaps you should ask {0} yourself."
 
@@ -166,7 +170,7 @@ def get_nice_message(gifts_list):
     else:
         final_message = ''
         curr_spot = 0
-        for gift in gifts_list[0:3]:
+        for gift in gifts_list[0:MAX_GIFTS]:
             if gift[0][0] == 'sports team':
                 if curr_spot == 0:
                     final_message += '{0} might like an item from the ' + gift[0][1] + '. I found one for ' + gift[1] + ' dollars on ebay.'
