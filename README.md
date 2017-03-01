@@ -1,6 +1,14 @@
 # Gift Suggester #
 Code for HackBU 2017
 
+Check out our submission: https://devpost.com/software/hackbu
+
+Awards
+- Third place
+- Amazon Web Services: Best use AWS
+- Hippest Stack
+- Viacom's Best IoT Hack
+
 # The Problem #
 What if you didn't know what to get for your friend on their birthday?
 
